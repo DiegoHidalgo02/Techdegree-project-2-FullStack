@@ -16,7 +16,21 @@ For assistance:
 /*
 Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
+
 */
+
+async function createInput(){
+
+   const parent = document.querySelector("button").parentNode;
+   const search = document.createElement("input");
+   search.id = "search";
+   search.placeholder = "Search by Name";
+   const buttonSearch = document.querySelector("button");
+   await parent.insertBefore(search, buttonSearch);
+
+}
+
+
 
 let student_list = document.querySelector(".student-list");
 let link_list = document.querySelector(".link-list");
@@ -94,10 +108,12 @@ link_list.addEventListener("click", (e)=>{
 
 });
 
+createInput().then(()=>{const search = document.querySelector("#search") } );
 
-const search = document.querySelector("#search");
 search.addEventListener("keyup", e => {
 
+   const search = document.querySelector("#search");
+      
    let filteredArray = [];
 
    let  inputValue = e.target.value.toLowerCase();
@@ -129,6 +145,7 @@ search.addEventListener("keyup", e => {
 
 
 // Call functions
+
 addPagination(data);
 showPage(data, 1);
 
