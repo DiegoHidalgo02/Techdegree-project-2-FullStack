@@ -121,8 +121,8 @@ search.addEventListener("keyup", e => {
 
    data.forEach((element, index) => {
 
-      let completeCredential =  `${element.name.title} ${element.name.first} ${element.name.last}`;
-      let checkCredential = completeCredential.toLowerCase().includes(inputValue);
+      //let completeCredential =  `${element.name.title} ${element.name.first} ${element.name.last}`;
+      let checkCredential = element.name.first.toLowerCase().includes(inputValue);
 
       if(checkCredential){
 
