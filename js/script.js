@@ -19,6 +19,8 @@ This function will create and insert/append the elements needed to display a "pa
 
 */
 
+let filteredArray = [];
+
 async function createInput(){
 
    const parent = document.querySelector("button").parentNode;
@@ -34,6 +36,7 @@ async function createInput(){
 
 let student_list = document.querySelector(".student-list");
 let link_list = document.querySelector(".link-list");
+
 function showPage(list, page){
 
    let start = (page * 9) - 9;
@@ -75,7 +78,7 @@ This function will create and insert/append the elements needed for the paginati
 */
 function addPagination(list){
 
-   let nButtons = list.length / 9; //per ogni bottone che equivale ad una pagina ci devono essere nove elementi
+   let nButtons = Math.ceil(list.length / 9); //per ogni bottone che equivale ad una pagina ci devono essere nove elementi
 
    let link_list = document.querySelector(".link-list");
 
@@ -101,7 +104,14 @@ link_list.addEventListener("click", (e)=>{
       activeButton.classList.remove("active");
       e.target.classList.add("active");
 
-      showPage(data, +e.target.textContent);
+      const search = document.querySelector("#search");
+
+      if(search.value.length === 0){
+         showPage(data, +e.target.textContent);
+      }else{
+         showPage(filteredArray, +e.target.textContent);
+      }
+      
 
    }
 
@@ -109,15 +119,11 @@ link_list.addEventListener("click", (e)=>{
 });
 
 createInput().then(()=>{const search = document.querySelector("#search") } );
-
 search.addEventListener("keyup", e => {
 
    const search = document.querySelector("#search");
-      
-   let filteredArray = [];
-
    let  inputValue = e.target.value.toLowerCase();
-
+   filteredArray.length = 0;
 
    data.forEach((element, index) => {
 
@@ -125,10 +131,7 @@ search.addEventListener("keyup", e => {
       let checkCredential = element.name.first.toLowerCase().includes(inputValue);
 
       if(checkCredential){
-
          filteredArray.push(element);
-         addPagination(filteredArray);
-         showPage(filteredArray, 1);
       }
 
       if(filteredArray.length > 0){
@@ -139,7 +142,9 @@ search.addEventListener("keyup", e => {
          link_list.innerHTML = "";
       }
 
-   })
+   });
+
+   console.log(filteredArray);
 })
 
 
